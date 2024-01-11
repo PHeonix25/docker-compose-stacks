@@ -2,7 +2,7 @@ version: "3"
 services:
   dns-server:
     container_name: dns-server
-    hostname: dns-server
+    hostname: ${DOMAIN}
     image: technitium/dns-server:latest
     ports:
       - "${WEB_HTTP_PORT}:5380/tcp" #DNS web console (HTTP)
@@ -18,7 +18,7 @@ services:
       #- "67:67/udp" #DHCP service      
     environment:
       # https://github.com/TechnitiumSoftware/DnsServer/blob/master/DockerEnvironmentVariables.md
-      - DNS_SERVER_DOMAIN=dns-server 
+      - DNS_SERVER_DOMAIN=${DOMAIN}
         #The primary domain name used by this DNS Server to identify itself.
       - DNS_SERVER_ADMIN_PASSWORD=${ADMIN_PASSWORD}
         #DNS web console admin user password.
