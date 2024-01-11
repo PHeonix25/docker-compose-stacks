@@ -6,7 +6,7 @@ services:
     image: technitium/dns-server:latest
     ports:
       - "${WEB_HTTP_PORT}:5380/tcp" #DNS web console (HTTP)
-      - "${WEB_HTTPS_PORT}:53443/tcp" #DNS web console (HTTPS)
+      #- "53443:53443/tcp" #DNS web console (HTTPS)
       - "53:53/udp" #DNS service
       - "53:53/tcp" #DNS service
       #- "853:853/udp" #DNS-over-QUIC service
@@ -26,9 +26,9 @@ services:
         #DNS Server will use IPv6 for querying whenever possible with this option enabled.
       - DNS_SERVER_WEB_SERVICE_HTTP_PORT=${WEB_HTTP_PORT} #5380 
         #The TCP port number for the DNS web console over HTTP protocol.
-      - DNS_SERVER_WEB_SERVICE_HTTPS_PORT=${WEB_HTTPS_PORT} #53443 
+      # - DNS_SERVER_WEB_SERVICE_HTTPS_PORT=53443
         #The TCP port number for the DNS web console over HTTPS protocol.
-      - DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS=true 
+      # - DNS_SERVER_WEB_SERVICE_ENABLE_HTTPS=true
         #Enables HTTPS for the DNS web console.
       - DNS_SERVER_WEB_SERVICE_USE_SELF_SIGNED_CERT=true
         #Enables self signed TLS certificate for the DNS web console.
