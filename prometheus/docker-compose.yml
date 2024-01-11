@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - graphana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
+      - GF_SERVER_ROOT_URL=${GF_SERVER_ROOT_URL}
+    depends_on:
+      - prometheus
+    ports:
+       - 9060:3000
+  
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    volumes:
+      - prometheus:/prometheus
+    command:
+      - '--config.file=/prometheus/configs/prometheus.yml'
+      - '--storage.tsdb.retention.time=30d'
+      - '--storage.tsdb.path=/prometheus'
+    depends_on:
+    - cadvisor
+    - pve-exporter
+    - node-exporter
+  
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    restart: unless-stopped
+    ports:
+      - 9080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+  pve-exporter:
+    image: prompve/prometheus-pve-exporter
+    container_name: pve-exporter
+    restart: unless-stopped
+    ports:
+      - 9070:9221
+    environment:
+      - PVE_USER=${PVE_USER}
+      - PVE_PASSWORD=${PVE_PASSWORD}
+      - PVE_VERIFY_SSL=false
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node-exporter
+    restart: unless-stopped
+    ports:
+      - 9100:9100
+    command:
+      - '--collector.systemd'
+      - '--collector.processes'
+
+volumes:
+  prometheus:
+  graphana:
