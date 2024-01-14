@@ -64,6 +64,9 @@ services:
     command:
       - '--collector.systemd'
       - '--collector.processes'
+      - '--path.rootfs=/host'
+    volumes:
+      - '/:/host:ro,rslave'
 
 volumes:
   prometheus:
