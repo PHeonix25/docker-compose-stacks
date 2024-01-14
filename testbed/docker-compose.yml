@@ -1,0 +1,6 @@
+version: "3"
+services:
+  alpine:
+    image: alpine
+    container_name: testbed
+    command: tail -f /dev/null
