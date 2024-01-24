@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    command: tunnel --no-autoupdate run --token ${CF_TOKEN}
+    environment:
+      - CF_TOKEN=${CF_TOKEN}
+      - TZ=${TZ}
+    restart: unless-stopped
+
+  ddns-updater:
+    image: qmcgaw/ddns-updater:latest
+    container_name: ddns-updater
+    hostname: ddns-updater
+    user: "0" # Don't do this, this sucks!
+    ports:
+      - 8002:8000/tcp
+    environment:
+      - CONFIG=${DDNS_CONFIG}
+      - TZ=${TZ}
+      - PERIOD=5m
+      - UPDATE_COOLDOWN_PERIOD=5m
+      - PUBLICIP_FETCHERS=all
+      - PUBLICIP_HTTP_PROVIDERS=all
+      - PUBLICIPV4_HTTP_PROVIDERS=all
+      - PUBLICIPV6_HTTP_PROVIDERS=all
+      - PUBLICIP_DNS_PROVIDERS=all
+      - PUBLICIP_DNS_TIMEOUT=3s
+      - HTTP_TIMEOUT=10s
+      - LISTENING_PORT=8000
+      - HEALTH_SERVER_ADDRESS=127.0.0.1:9999
+      - ROOT_URL=/
+      - BACKUP_PERIOD=24h # 0 to disable
+      - BACKUP_DIRECTORY=/updater/data
+      - LOG_LEVEL=info
+      - LOG_CALLER=hidden
+      - SHOUTRRR_ADDRESSES=${SHOUTRRR_ADDRESS}
+    volumes:
+      - ddns-updater:/updater/data
+    restart: unless-stopped
+
+volumes:
+  ddns-updater:
