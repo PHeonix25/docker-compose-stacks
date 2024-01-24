@@ -12,7 +12,7 @@ services:
       - TZ=${TZ}
     volumes:
       - cache:/cache:rw
-      - config:/config:rw
+      - ${MOUNT_PATH_CONFIG}/jellyfin:/config:rw
       - ${MOUNT_PATH_TV}:/data/tvshows:rw
       - ${MOUNT_PATH_MOVIES}:/data/movies:rw
 
@@ -26,7 +26,7 @@ services:
     volumes:
       - /temp/complete:/downloads:rw
       - ${MOUNT_PATH_TV}:/tv:rw
-      - config:/config:rw
+      - ${MOUNT_PATH_CONFIG}/sonarr:/config:rw
     depends_on:
       - sabnzbd
 
@@ -40,7 +40,7 @@ services:
     volumes:
       - /temp/complete/movies:/downloads:rw
       - ${MOUNT_PATH_MOVIES}:/movies:rw
-      - config:/config:rw
+      - ${MOUNT_PATH_CONFIG}/radarr:/config:rw
     depends_on:
       - sabnzbd
 
@@ -55,7 +55,7 @@ services:
       - /temp/nzbs:/nzbs:rw
       - /temp/incomplete:/incomplete-downloads:rw
       - /temp/complete:/downloads:rw
-      - config:/config:rw
+      - ${MOUNT_PATH_CONFIG}/sabnzbd:/config:rw
     depends_on:
       - nzbhydra2
 
@@ -68,8 +68,7 @@ services:
       - TZ=${TZ}
     volumes:
       - /temp/nzbs:/downloads:rw
-      - config:/config:rw
+      - ${MOUNT_PATH_CONFIG}/nzbhydra2:/config:rw
 
 volumes:
   cache:
-  config:
