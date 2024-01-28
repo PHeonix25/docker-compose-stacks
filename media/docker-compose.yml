@@ -11,8 +11,8 @@ services:
       - JELLYFIN_PublishedServerUrl=${JELLYFIN_IP}
       - TZ=${TZ}
     volumes:
+      - ~/jellyfin:/config:rw
       - cache:/cache:rw
-      - ${MOUNT_PATH_CONFIG}/jellyfin:/config:rw
       - ${MOUNT_PATH_TV}:/data/tvshows:rw
       - ${MOUNT_PATH_MOVIES}:/data/movies:rw
 
@@ -26,9 +26,9 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     volumes:
+      - ~/sonarr:/config:rw
       - /temp/complete:/downloads:rw
       - ${MOUNT_PATH_TV}:/tv:rw
-      - ${MOUNT_PATH_CONFIG}/sonarr:/config:rw
     depends_on:
       - sabnzbd
       - prowlarr
@@ -43,9 +43,9 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     volumes:
+      - ~/radarr:/config:rw
       - /temp/complete/movies:/downloads:rw
       - ${MOUNT_PATH_MOVIES}:/movies:rw
-      - ${MOUNT_PATH_CONFIG}/radarr:/config:rw
     depends_on:
       - sabnzbd
       - prowlarr
@@ -60,10 +60,10 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     volumes:
+      - ~/sabnzbd:/config:rw
       - /temp/nzbs:/nzbs:rw
       - /temp/incomplete:/incomplete-downloads:rw
       - /temp/complete:/downloads:rw
-      - ${MOUNT_PATH_CONFIG}/sabnzbd:/config:rw
     depends_on:
       - nzbhydra2
       - prowlarr
@@ -78,7 +78,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     volumes:
-      - ${MOUNT_PATH_CONFIG}/prowlarr:/config
+      - ~/prowlarr:/config
     restart: unless-stopped
 
   nzbhydra2:
@@ -91,8 +91,8 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
     volumes:
+      - ~/nzbhydra2:/config:rw
       - /temp/nzbs:/downloads:rw
-      - ${MOUNT_PATH_CONFIG}/nzbhydra2:/config:rw
     restart: unless-stopped
 
 volumes:
