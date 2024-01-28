@@ -23,6 +23,8 @@ services:
       - "8881:8989"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
       - /temp/complete:/downloads:rw
       - ${MOUNT_PATH_TV}:/tv:rw
@@ -38,6 +40,8 @@ services:
       - "8882:7878"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
       - /temp/complete/movies:/downloads:rw
       - ${MOUNT_PATH_MOVIES}:/movies:rw
@@ -53,6 +57,8 @@ services:
       - "8883:8080"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
       - /temp/nzbs:/nzbs:rw
       - /temp/incomplete:/incomplete-downloads:rw
@@ -69,6 +75,8 @@ services:
       - 8885:9696
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
       - ${MOUNT_PATH_CONFIG}/prowlarr:/config
     restart: unless-stopped
@@ -80,6 +88,8 @@ services:
       - "8884:5076"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
       - /temp/nzbs:/downloads:rw
       - ${MOUNT_PATH_CONFIG}/nzbhydra2:/config:rw
