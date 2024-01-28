@@ -35,7 +35,7 @@ services:
     container_name: radarr
     image: linuxserver/radarr:latest
     ports:
-      - "8882:8082"
+      - "8882:7878"
     environment:
       - TZ=${TZ}
     volumes:
