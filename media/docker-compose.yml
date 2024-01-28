@@ -17,6 +17,7 @@ services:
       - cache:/cache:rw
       - ${MOUNT_PATH_TV}:/data/tvshows:rw
       - ${MOUNT_PATH_MOVIES}:/data/movies:rw
+    restart: unless-stopped
 
   sonarr:
     container_name: sonarr
