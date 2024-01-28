@@ -29,6 +29,7 @@ services:
       - ${MOUNT_PATH_CONFIG}/sonarr:/config:rw
     depends_on:
       - sabnzbd
+      - prowlarr
 
   radarr:
     container_name: radarr
@@ -43,6 +44,7 @@ services:
       - ${MOUNT_PATH_CONFIG}/radarr:/config:rw
     depends_on:
       - sabnzbd
+      - prowlarr
 
   sabnzbd:
     container_name: sabnzbd
@@ -58,6 +60,18 @@ services:
       - ${MOUNT_PATH_CONFIG}/sabnzbd:/config:rw
     depends_on:
       - nzbhydra2
+      - prowlarr
+  
+  prowlarr:
+    container_name: prowlarr
+    image: linuxserver/prowlarr:latest
+    ports:
+      - 8885:9696
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${MOUNT_PATH_CONFIG}/prowlarr:/config
+    restart: unless-stopped
 
   nzbhydra2:
     container_name: nzbhydra2
@@ -69,6 +83,7 @@ services:
     volumes:
       - /temp/nzbs:/downloads:rw
       - ${MOUNT_PATH_CONFIG}/nzbhydra2:/config:rw
+    restart: unless-stopped
 
 volumes:
   cache:
