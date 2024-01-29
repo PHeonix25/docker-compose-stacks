@@ -212,7 +212,7 @@ def jelly(newUser_pw):
 		for eUser in MigrationData:
 			if eUser.replace(" ","_") in JellyUsersIdDict.keys():
 				print("Jelly already knows {0} (Id {1})".format(eUser.replace(" ","_"), JellyUsersIdDict[eUser.replace(" ","_")] ))
-				report['users'] += "{0} (Source) is  {1} (Jelly)\n".format(eUser, eUser.replace(" ","_"))
+				report['users'] += "User '{0}' (Source) is '{1}' (Jelly)\n".format(eUser, eUser.replace(" ","_"))
 			else:
 				print("{0} ..  Creating".format(eUser))
 				## creating user account
@@ -225,7 +225,7 @@ def jelly(newUser_pw):
 							json={'name': eUser.replace(" ","_"), 'Password' : set_pw(eUser.replace(" ","_"),newUser_pw)})
 				if response.status_code == 200:
 					print("{0}  Created".format(eUser.replace(" ","_")))
-					report['users'] += "- User '{0}' created on Jellyfin`n".format(eUser, eUser.replace(" ","_"))
+					report['users'] += "- User '{0}' created on Jellyfin\n".format(eUser, eUser.replace(" ","_"))
 
 					
 				else:

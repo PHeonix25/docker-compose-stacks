@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80/tcp'
+      - '443:443/tcp'
+      - '81:81/tcp'
+    environment:
+      - SSL_CERT_FILE=${SSL_CERT_FILE}
+      - CURL_CA_BUNDLE=${CURL_CA_BUNDLE}
+    volumes:
+      - nginx-proxy:/data
+      - nginx-proxy:/etc/letsencrypt
+
+healthcheck:
+  test: ["CMD", "/usr/bin/check-health"]
+  interval: 10s
+  timeout: 3s
+
+volumes:
+  nginx-proxy:

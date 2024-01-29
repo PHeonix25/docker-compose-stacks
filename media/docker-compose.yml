@@ -10,11 +10,14 @@ services:
     environment:
       - JELLYFIN_PublishedServerUrl=${JELLYFIN_IP}
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
+      - /home/jellyfin:/config:rw
       - cache:/cache:rw
-      - config:/config:rw
       - ${MOUNT_PATH_TV}:/data/tvshows:rw
       - ${MOUNT_PATH_MOVIES}:/data/movies:rw
+    restart: unless-stopped
 
   sonarr:
     container_name: sonarr
@@ -23,26 +26,32 @@ services:
       - "8881:8989"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
+      - /home/sonarr:/config:rw
       - /temp/complete:/downloads:rw
       - ${MOUNT_PATH_TV}:/tv:rw
-      - config:/config:rw
     depends_on:
       - sabnzbd
+      - prowlarr
 
   radarr:
     container_name: radarr
     image: linuxserver/radarr:latest
     ports:
-      - "8882:8082"
+      - "8882:7878"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
+      - /home/radarr:/config:rw
       - /temp/complete/movies:/downloads:rw
       - ${MOUNT_PATH_MOVIES}:/movies:rw
-      - config:/config:rw
     depends_on:
       - sabnzbd
+      - prowlarr
 
   sabnzbd:
     container_name: sabnzbd
@@ -51,13 +60,29 @@ services:
       - "8883:8080"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
+      - /home/sabnzbd:/config:rw
       - /temp/nzbs:/nzbs:rw
       - /temp/incomplete:/incomplete-downloads:rw
       - /temp/complete:/downloads:rw
-      - config:/config:rw
     depends_on:
       - nzbhydra2
+      - prowlarr
+  
+  prowlarr:
+    container_name: prowlarr
+    image: linuxserver/prowlarr:latest
+    ports:
+      - 8885:9696
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+      - /home/prowlarr:/config
+    restart: unless-stopped
 
   nzbhydra2:
     container_name: nzbhydra2
@@ -66,10 +91,12 @@ services:
       - "8884:5076"
     environment:
       - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
     volumes:
+      - /home/nzbhydra2:/config:rw
       - /temp/nzbs:/downloads:rw
-      - config:/config:rw
+    restart: unless-stopped
 
 volumes:
   cache:
-  config:
