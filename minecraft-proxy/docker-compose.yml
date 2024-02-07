@@ -1,0 +1,8 @@
+version: "3"
+services:
+  bedrockconnect:
+    image: ghcr.io/pheonix25/hankiz:latest
+    container_name: bedrockconnect
+    restart: unless-stopped
+    ports:
+      - "19132:19132/udp"
