@@ -2,6 +2,7 @@ version: "3"
 
 networks:
   socket_proxy:
+    name: socket_proxy
     internal: true
 
 services:
