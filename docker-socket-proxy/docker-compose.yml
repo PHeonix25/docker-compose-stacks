@@ -1,8 +1,9 @@
 version: "3"
 
 networks:
-  socket_proxy:
+  default:
     name: socket_proxy
+    internal: true
 
 services:
   dockerproxy:
