@@ -21,22 +21,22 @@ services:
       # Security critical
       - AUTH=0
       - SECRETS=0
-      - POST=1 # Watchtower
+      - POST=${DS_POST}         # Watchtower
       # Not always needed
       - BUILD=0
       - COMMIT=0
       - CONFIGS=0
-      - CONTAINERS=1 # Traefik, portainer, etc.
+      - CONTAINERS=${DS_CONTAINERS} # Traefik, portainer, etc.
       - DISTRIBUTION=0
       - EXEC=0
-      - IMAGES=1 # Portainer
-      - INFO=1 # Portainer
-      - NETWORKS=1 # Portainer
+      - IMAGES=${DS_IMAGES}     # Portainer
+      - INFO=${DS_INFO}         # Portainer
+      - NETWORKS=${DS_NETWORKS} # Portainer
       - NODES=0
       - PLUGINS=0
-      - SERVICES=1 # Portainer
+      - SERVICES=${DS_SERVICES} # Portainer
       - SESSION=0
       - SWARM=0
       - SYSTEM=0
-      - TASKS=1 # Portainer
-      - VOLUMES=1 # Portainer
+      - TASKS=${DS_TASKS}       # Portainer
+      - VOLUMES=${DS_VOLUMES}   # Portainer
