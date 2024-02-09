@@ -2,7 +2,6 @@ version: "3"
 services:
   dockerproxy:
     image: tecnativa/docker-socket-proxy:latest
-    name: dockerproxy
     container_name: dockerproxy
     ports: 
       - 2375:2375/tcp
