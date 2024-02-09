@@ -1,8 +1,7 @@
 version: "3"
 
 networks:
-  default:
-    name: socket_proxy
+  socket_proxy:
     internal: true
 
 services:
