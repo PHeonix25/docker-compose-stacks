@@ -4,6 +4,7 @@ services:
     container_name: watchtower
     image: containrrr/watchtower:latest
     environment:
+      - DOCKER_HOST=${DOCKER_HOST}
       - TZ=${TZ}
       - WATCHTOWER_CLEANUP=${WATCHTOWER_CLEANUP}
       - WATCHTOWER_DEBUG=${WATCHTOWER_DEBUG}
@@ -12,6 +13,4 @@ services:
       - WATCHTOWER_NOTIFICATION_TITLE_TAG=${WATCHTOWER_NOTIFICATION_TITLE_TAG}
       - WATCHTOWER_NOTIFICATIONS=${WATCHTOWER_NOTIFICATIONS}
       - WATCHTOWER_POLL_INTERVAL=${WATCHTOWER_POLL_INTERVAL}
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
