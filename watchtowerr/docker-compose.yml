@@ -11,8 +11,8 @@ services:
     image: containrrr/watchtower:latest
     networks:
       - socket_proxy
+    command: --host ${DOCKER_PROXY}
     environment:
-      - DOCKER_HOST=${DOCKER_HOST}
       - TZ=${TZ}
       - WATCHTOWER_CLEANUP=${WATCHTOWER_CLEANUP}
       - WATCHTOWER_DEBUG=${WATCHTOWER_DEBUG}
