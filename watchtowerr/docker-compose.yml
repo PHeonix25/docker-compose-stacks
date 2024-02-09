@@ -1,8 +1,16 @@
 version: "3"
+
+networks:
+  socket_proxy:
+    name: socket_proxy
+    external: true
+
 services:
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower:latest
+    networks:
+      - socket_proxy
     environment:
       - DOCKER_HOST=${DOCKER_HOST}
       - TZ=${TZ}
