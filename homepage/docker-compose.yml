@@ -7,5 +7,6 @@ services:
       - 3000:3000
     volumes:
       - /mnt/remote/config/homepage:/app/config # Make sure your local config directory exists
-      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+      # Replaced by docker-socket-proxy!
+      # - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
