@@ -1,8 +1,16 @@
 version: "3.3"
+
+networks:
+  default:
+    name: socket_proxy
+    external: true
+
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
+    networks:
+      - socket_proxy
     ports:
       - 3000:3000
     volumes:
