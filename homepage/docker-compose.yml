@@ -1,7 +1,7 @@
 version: "3.3"
 
 networks:
-  default:
+  socket_proxy:
     name: socket_proxy
     external: true
 
