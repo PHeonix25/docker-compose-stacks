@@ -1,8 +1,15 @@
 version: "3"
+
+networks:
+  socket_proxy:
+    name: socket_proxy
+
 services:
   dockerproxy:
     image: tecnativa/docker-socket-proxy:latest
     container_name: dockerproxy
+    networks:
+      - socket_proxy
     ports: 
       - 2375:2375/tcp
     volumes:
