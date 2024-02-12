@@ -7,7 +7,7 @@ networks:
 
 services:
   dockerproxy:
-    image: tecnativa/docker-socket-proxy:latest
+    image: tecnativa/docker-socket-proxy:edge
     container_name: dockerproxy
     networks:
       - socket_proxy
@@ -24,29 +24,31 @@ services:
       - EVENTS=1
       - PING=1
       - VERSION=1
+      # Chosen to allow
+      - ALLOW_RESTARTS=1
       - ALLOW_START=1
       - ALLOW_STOP=1
-      - ALLOW_RESTARTS=1
       ## Revoked by Default
       # Security critical
       - AUTH=0
       - SECRETS=0
-      - POST=${DS_POST}         # Watchtower
+      - POST=${DS_POST}
       # Not always needed
       - BUILD=0
       - COMMIT=0
       - CONFIGS=0
-      - CONTAINERS=${DS_CONTAINERS} # Traefik, portainer, etc.
+      - CONTAINERS=${DS_CONTAINERS}
       - DISTRIBUTION=0
       - EXEC=0
-      - IMAGES=${DS_IMAGES}     # Portainer
-      - INFO=${DS_INFO}         # Portainer
-      - NETWORKS=${DS_NETWORKS} # Portainer
+      - GRPC=0
+      - IMAGES=${DS_IMAGES}
+      - INFO=${DS_INFO}
+      - NETWORKS=${DS_NETWORKS}
       - NODES=0
       - PLUGINS=0
-      - SERVICES=${DS_SERVICES} # Portainer
+      - SERVICES=${DS_SERVICES}
       - SESSION=0
       - SWARM=0
       - SYSTEM=0
-      - TASKS=${DS_TASKS}       # Portainer
-      - VOLUMES=${DS_VOLUMES}   # Portainer
+      - TASKS=${DS_TASKS}
+      - VOLUMES=${DS_VOLUMES}
