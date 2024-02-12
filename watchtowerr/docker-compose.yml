@@ -10,6 +10,7 @@ services:
     container_name: watchtower
     image: containrrr/watchtower:latest
     networks:
+      - default
       - socket_proxy
     command: --host ${DOCKER_PROXY}
     environment:
