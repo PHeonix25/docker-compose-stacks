@@ -88,7 +88,6 @@ services:
       - /temp/incomplete:/incomplete-downloads:rw
       - /temp/complete:/downloads:rw
     depends_on:
-      - nzbhydra2
       - prowlarr
     restart: unless-stopped
     healthcheck:
