@@ -4,7 +4,6 @@ services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
     container_name: nginx-proxy-manager
-    restart: unless-stopped
     ports:
       - '80:80/tcp'
       - '443:443/tcp'
@@ -15,6 +14,7 @@ services:
     volumes:
       - nginx-proxy:/data
       - nginx-proxy:/etc/letsencrypt
+    restart: unless-stopped
     healthcheck:
       test: "/usr/bin/check-health || exit 1"
       interval: 10s
