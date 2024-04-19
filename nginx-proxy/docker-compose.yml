@@ -16,9 +16,9 @@ services:
       - nginx-proxy:/data
       - nginx-proxy:/etc/letsencrypt
     healthcheck:
-      test: ["CMD", "/usr/bin/check-health"]
+      test: "/usr/bin/check-health || exit 1"
       interval: 10s
       timeout: 3s
-      
+
 volumes:
   nginx-proxy:
