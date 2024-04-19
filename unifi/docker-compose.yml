@@ -27,6 +27,12 @@ services:
       - 6789:6789       # used for mobile-throughput test
       #- 5514:5514/udp   # used for remote syslog
     restart: unless-stopped
+    healthcheck:
+      test: "curl --fail --insecure https://localhost:8443 || exit 1"
+      interval: 60s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
   unifi-db:
     image: docker.io/mongo:4.4
@@ -38,6 +44,12 @@ services:
       - database:/data/db
       - dbconfig:/data/configdb
     restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   mongo-express:
     image: mongo-express
@@ -52,6 +64,12 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_PASSWORD}
       - ME_CONFIG_MONGODB_URL=mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@unifi-db:27017/
     restart: unless-stopped
+    healthcheck:
+      test: "wget --tries=1 --spider --quiet http://localhost:8081/status || exit 1"
+      interval: 60s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
 
 volumes:
     config:
