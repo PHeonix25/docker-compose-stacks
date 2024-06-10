@@ -6,3 +6,7 @@ services:
     restart: unless-stopped
     ports:
       - "19132:19132/udp"
+    labels:
+      # We're going to manually lifecycle this one
+      - "com.centurylinklabs.watchtower.enable=false" 
+      
