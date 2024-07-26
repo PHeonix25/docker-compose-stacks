@@ -1,0 +1,42 @@
+version: '3'
+
+networks:
+  socket_proxy:
+    name: socket_proxy
+    external: true
+
+services:
+  netdata:
+    image: netdata/netdata:stable
+    container_name: netdata
+    pid: host
+    networks:
+      - default
+      - socket_proxy
+    ports:
+      - 19999:19999
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /:/host/root:ro,rslave
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/log:/host/var/log:ro
+    environment:
+      - DOCKER_HOST=${DOCKER_PROXY}
+
+volumes:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
