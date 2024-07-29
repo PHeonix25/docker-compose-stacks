@@ -41,8 +41,8 @@ services:
       - ${MOUNT_PATH_TV}:/data/tvshows:rw
       - ${MOUNT_PATH_MOVIES}:/data/movies:rw
     group_add:
-      - 44  # add video group for card device
-      - 104 # add render group for render device
+      - "44"  # add video group for card device
+      - "104" # add render group for render device
     devices:
       - /dev/dri:/dev/dri
       - /dev/kfd:/dev/kfd
