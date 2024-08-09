@@ -85,10 +85,12 @@ This guide assumes your server is already working. To test this, you can use Min
 3. Create a file named `Corefile` (no extension) in the same folder as the Coredns executable.
 4. Open it, and copy the following contents in
 
+```
         .:53 {
             rewrite name exact mco.lbsg.net example.com
             forward . 1.1.1.1:53
         }
+```
 
     While doing this, replace example.com with the address for your server (this cannot be a raw IP address).
 
