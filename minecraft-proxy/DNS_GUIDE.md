@@ -1,18 +1,19 @@
 # Minecraft: Bedrock Edition Custom Server DNS Trick
 
-    * [SOURCE](#source)
-    * [About](#about)
-        + [What is this?](#what-is-this-)
-        + [What platforms/versions have been reported working?](#what-platforms-versions-have-been-reported-working-)
-        + [How does this work?](#how-does-this-work-)
-        + [Why would I want to do this?](#why-would-i-want-to-do-this-)
-        + [Limitations of this trick](#limitations-of-this-trick)
-        + [List of the domains for featured servers](#domains-list)
-    * [Setup](#setup)
-        + [Requirements](#requirements)
-        + [DNS Setup on the server](#dns-setup-on-the-server)
-        + [DNS setup on the console](#dns-setup-on-the-console)
-    * [Making Improvements](#making-improvements)
+* [SOURCE](#source)
+* [About](#about)
+    + [What is this?](#what-is-this-)
+    + [What platforms/versions have been reported working?](#what-platforms-versions-have-been-reported-working-)
+    + [How does this work?](#how-does-this-work-)
+    + [Why would I want to do this?](#why-would-i-want-to-do-this-)
+    + [Limitations of this trick](#limitations-of-this-trick)
+    + [List of the domains for featured servers](#domains-list)
+* [Setup](#setup)
+    + [Requirements](#requirements)
+    + [DNS Setup on the server](#dns-setup-on-the-server)
+    + [DNS setup on the console](#dns-setup-on-the-console)
+* [Making Improvements](#making-improvements)
+----
 
 ## Source
 
@@ -92,11 +93,11 @@ This guide assumes your server is already working. To test this, you can use Min
         }
 ```
 
-    While doing this, replace example.com with the address for your server (this cannot be a raw IP address).
+While doing this, replace example.com with the address for your server (this cannot be a raw IP address).
 
-    If you want to use a DNS server other than Cloudflare's for any other requests, change `1.1.1.1`
+If you want to use a DNS server other than Cloudflare's for any other requests, change `1.1.1.1`
 
-    > This file will tell CoreDNS to treat all requests to mco.lbsg.net (the Lifeboat Network) as requests instead for `example.com`, which is the core component of the trick
+> This file will tell CoreDNS to treat all requests to mco.lbsg.net (the Lifeboat Network) as requests instead for `example.com`, which is the core component of the trick
 
 5. (Skip this step if you use Windows) Mark CoreDNS as executable using `chmod +x ./CoreDNS`
 
