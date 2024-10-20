@@ -15,7 +15,14 @@ It's a hack, but it works!
 
 ## Summary
 
-> 1. Use the `docker-compose.yml` + `dockerfile` in this folder to stand up a BedrockConnect instance (or [follow these instructions](https://github.com/Pugmatt/BedrockConnect))
+> 1. Use the `dockerfile` in this folder to make an image, then change the image in the `docker-compose.yml` to your local image & stand up a BedrockConnect instance (or [follow these instructions](https://github.com/Pugmatt/BedrockConnect))
+
+OR
+
+> 1. Use the `docker-compose.yml` as-is in this repo to use the public `pugmatt/bedrockconnect` image
+
+THEN 
+
 > 2. Point [these domains](#domains-list) at your new BedrockConnect instance via DNS
 > 3. Update the DNS settings on the Switch to point at your customised DNS server (if your home network doesn't do this already)
 

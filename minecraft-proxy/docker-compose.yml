@@ -1,12 +1,16 @@
 version: "3"
 services:
   bedrockconnect:
-    image: ghcr.io/pheonix25/hankiz:latest
+    image: pugmatt/bedrock-connect:latest
     container_name: bedrockconnect
-    restart: unless-stopped
     ports:
       - "19132:19132/udp"
-    labels:
-      # We're going to manually lifecycle this one
-      - "com.centurylinklabs.watchtower.enable=false" 
+    environment:
+      - BC_NODB=${NODB}
+      - BC_CUSTOM_SERVERS=${CUSTOM_SERVERS} 
+      - BC_FEATURED_SERVERS=${FEATURED_SERVERS}
+      - BC_USER_SERVERS=${USER_SERVERS}
+    volumes:
+      - /var/lib/docker/volumes/minecraft/_data:/app/:ro
+    restart: unless-stopped
       

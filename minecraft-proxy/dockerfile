@@ -1,13 +1,15 @@
 FROM openjdk:11
+
 RUN mkdir -p /app
 ADD https://github.com/Pugmatt/BedrockConnect/releases/latest/download/BedrockConnect-1.0-SNAPSHOT.jar /app
+
+# Add required configuration
 ADD ./custom_servers.json /app/custom_servers.json
-#ADD ./player_whitelist.txt /app/whitelist.txt
+# ADD ./player_whitelist.txt /app/whitelist.txt
+
 WORKDIR /app
 EXPOSE 19132/udp
-CMD ["java", "-Xms512M", "-Xmx512M", \
-    "-jar", "BedrockConnect-1.0-SNAPSHOT.jar", \
-    "nodb=true", \
-    "custom_servers=/app/custom_servers.json", \ 
-    # "whitelist=/app/whitelist.txt", \
-    "featured_servers=false", "user_servers=false"]
+
+# Swap if you need a player-whitelist:
+# CMD ["java", "-Xms512M", "-Xmx512M", "-jar", "BedrockConnect-1.0-SNAPSHOT.jar", "nodb=true", "custom_servers=/app/custom_servers.json", "whitelist=/app/whitelist.txt", "featured_servers=false", "user_servers=false"]
+CMD ["java", "-Xms512M", "-Xmx512M", "-jar", "BedrockConnect-1.0-SNAPSHOT.jar", "nodb=true", "custom_servers=/app/custom_servers.json", "featured_servers=false", "user_servers=false"]
