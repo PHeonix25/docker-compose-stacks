@@ -1,0 +1,46 @@
+services:
+  freshrss:
+    image: freshrss/freshrss:latest
+    container_name: freshrss
+    hostname: freshrss
+    logging:
+      options:
+        max-size: 10m
+    volumes:
+      - data:/var/www/FreshRSS/data
+      - extensions:/var/www/FreshRSS/extensions
+    ports:
+      - "${PUBLISHED_PORT}:80"
+    restart: unless-stopped
+    environment:
+      TZ: Australia/Sydney
+      CRON_MIN: '2,32'
+      LISTEN: 0.0.0.0:80
+      SERVER_DNS: ${SERVER_DNS}
+      # Optional parameter, remove for automatic settings, set to 0 to disable,
+      # or (if you use a proxy) to a space-separated list of trusted IP ranges
+      # compatible with https://httpd.apache.org/docs/current/mod/mod_remoteip.html#remoteipinternalproxy
+      # This impacts which IP address is logged (X-Forwarded-For or REMOTE_ADDR).
+      # This also impacts external authentication methods;
+      # see https://freshrss.github.io/FreshRSS/en/admins/09_AccessControl.html
+      TRUSTED_PROXY: 172.16.0.1/12 192.168.0.1/16
+
+  freshrss-db:
+    image: postgres:17
+    container_name: freshrss-db
+    hostname: freshrss-db
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: 10m
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_BASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+volumes:
+  db:
+  data:
+  extensions:
