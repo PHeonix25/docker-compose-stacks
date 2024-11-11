@@ -2,12 +2,12 @@
 	{
 		"name": "HANKIZ",
 		"iconUrl": "https://hermens.com.au/assets/mc.png",
-		"address": <REDACTED>,
+		"address": "minecraft.ferreira.com.au",
 		"port": 19132
 	},
-    {
-        "name": "Geyser Test",
-        "address": "test.geysermc.org",
-        "port": 19132
-    }
+	{
+		"name": "Geyser Test",
+		"address": "test.geysermc.org",
+		"port": 19132
+	}
 ]
