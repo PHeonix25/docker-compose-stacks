@@ -1,0 +1,24 @@
+version: "3.3"
+
+networks:
+  socket_proxy:
+    name: socket_proxy
+    external: true
+
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    container_name: glances
+    networks:
+      - host
+      - socket_proxy
+    ports:
+      - 61208-61209:61208-61209
+    pid: host
+    environment:
+      - DOCKER_HOST=${DOCKER_PROXY}
+      - GLANCES_OPT=-w
+      - TZ=${TZ}
+    volumes:
+      - /etc/os-release:/etc/os-release:ro # To get the underlying system info
+    restart: unless-stopped
