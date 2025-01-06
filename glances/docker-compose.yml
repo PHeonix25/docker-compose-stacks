@@ -1,16 +1,9 @@
-version: "3.3"
-
-networks:
-  socket_proxy:
-    name: socket_proxy
-    external: true
-
 services:
   glances:
     image: nicolargo/glances:latest-full
     container_name: glances
     networks:
-      - host
+      - default
       - socket_proxy
     ports:
       - 61208-61209:61208-61209
@@ -22,3 +15,8 @@ services:
     volumes:
       - /etc/os-release:/etc/os-release:ro # To get the underlying system info
     restart: unless-stopped
+
+networks:
+  socket_proxy:
+    name: socket_proxy
+    external: true
