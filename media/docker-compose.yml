@@ -49,10 +49,10 @@ services:
     restart: unless-stopped
     healthcheck:
       test: "curl --fail http://localhost:8096 || exit 1"
-      interval: 60s
+      interval: 30s
       timeout: 5s
       retries: 3
-      start_period: 90s # Occasionally needs updates, so give it a bit more time
+      start_period: 240s # Occasionally needs updates, so give it  plenty of time
 
   bazarr:
     container_name: bazarr
