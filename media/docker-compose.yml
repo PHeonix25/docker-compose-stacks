@@ -176,26 +176,32 @@ services:
       retries: 3
       start_period: 15s
 
-  maintainerr:
-    image: ghcr.io/jorenn92/maintainerr:latest
-    container_name: maintainerr
-    depends_on:
-      jellyfin:
-        condition: service_healthy
-    environment:
-      - TZ=${TZ}
-    user: ${PUID}:${PGID}
-    volumes:
-      - /home/maintainerr:/opt/data
-    ports:
-      - 6246:6246
-    restart: unless-stopped
-    healthcheck:
-      test: "wget --tries=1 --spider --quiet http://0.0.0.0:6246 || exit 1"
-      interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 15s
+  ## Unfortunately maintainerr won't do what I want (yet)
+  ## Keep an eye on https://github.com/jorenn92/Maintainerr/discussions/884 though!
+  ## There are a few other options, but none have GUIs, 
+  ## all are YAML: Deleterr, Janitorr, etc.
+  ## For now, I'm going to try and find another way...
+  ##
+  # maintainerr:
+  #   image: ghcr.io/jorenn92/maintainerr:latest
+  #   container_name: maintainerr
+  #   depends_on:
+  #     jellyfin:
+  #       condition: service_healthy
+  #   environment:
+  #     - TZ=${TZ}
+  #   user: ${PUID}:${PGID}
+  #   volumes:
+  #     - /home/maintainerr:/opt/data
+  #   ports:
+  #     - 6246:6246
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: "wget --tries=1 --spider --quiet http://0.0.0.0:6246 || exit 1"
+  #     interval: 30s
+  #     timeout: 5s
+  #     retries: 3
+  #     start_period: 15s
 
 volumes:
   cache:
