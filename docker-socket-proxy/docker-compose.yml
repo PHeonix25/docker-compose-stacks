@@ -7,7 +7,7 @@ networks:
 
 services:
   dockerproxy:
-    image: tecnativa/docker-socket-proxy:edge
+    image: tecnativa/docker-socket-proxy
     container_name: dockerproxy
     networks:
       - socket_proxy
@@ -52,3 +52,14 @@ services:
       - SYSTEM=0
       - TASKS=${DS_TASKS}
       - VOLUMES=${DS_VOLUMES}
+    healthcheck:
+      test: wget --spider http://localhost:2375/version || exit 1
+      interval: "29s"
+      timeout: "5s"
+      retries: 3
+      start_period: "21s"
+    logging:
+      driver: json-file
+      options:
+        max-size: "100m"
+        max-file: "3"
