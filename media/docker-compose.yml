@@ -1,25 +1,26 @@
 services:
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    init: true
+    container_name: seerr
     environment:
-      TZ: ${TZ}
+      - TZ=${TZ}
+      - LOG_LEVEL=debug
     ports:
       - 8886:5055
     volumes:
       - /home/jellyseerr:/app/config:rw
-      - cache:/app/cache:rw
     depends_on:
       jellyfin:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: "wget --tries=1 --spider --quiet http://localhost:5055 || exit 1"
-      interval: 30s
-      timeout: 5s
+      test: "wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/settings/public || exit 1"
+      interval: 15s
+      timeout: 3s
       retries: 3
-      start_period: 15s
-      
+      start_period: 20s
+     
   jellyfin:
     container_name: jellyfin
     hostname: ${JELLYFIN_HOSTNAME}
