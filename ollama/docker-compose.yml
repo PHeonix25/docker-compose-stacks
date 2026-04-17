@@ -1,0 +1,34 @@
+services:
+  # ollama:
+  #   container_name: ollama
+  #   hostname: ollama
+  #   image: ollama/ollama:rocm
+  #   ports:
+  #     - "11434:11434"
+  #   environment:
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - ollama:/root/.ollama:rw
+  #   group_add:
+  #     - "44"  # add video group for card device
+  #     - "104" # add render group for render device
+  #   devices:
+  #     - /dev/dri:/dev/dri
+  #     - /dev/kfd:/dev/kfd
+  #   restart: unless-stopped
+
+  openwebui:
+    container_name: openwebui
+    image: open-webui/open-webui:ollama
+    ports:
+      - "3003:8080"
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ollama:/root/.ollama:ro
+      - open-webui:/app/backend/data
+    restart: unless-stopped
+
+volumes:
+  ollama:
+  open-webui:
