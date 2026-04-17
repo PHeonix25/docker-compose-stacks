@@ -133,6 +133,31 @@ services:
       retries: 3
       start_period: 15s
 
+  lazylibrarian:
+    container_name: lazylibrarian
+    image: linuxserver/lazylibrarian:latest
+    ports:
+      - 8887:5299
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - DOCKER_MODS=linuxserver/mods:lazylibrarian-ffmpeg # Adding mods for audiobook transcoding
+    volumes:
+      - /home/lazylibrarian:/config:rw
+      - /temp/complete/books:/downloads:rw
+      - ${MOUNT_PATH_BOOKS}:/books:rw
+    depends_on:
+      sabnzbd:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: "curl --fail http://localhost:5299 || exit 1"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
   sabnzbd:
     container_name: sabnzbd
     image: linuxserver/sabnzbd:latest
