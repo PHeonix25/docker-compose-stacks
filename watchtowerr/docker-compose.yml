@@ -8,7 +8,7 @@ networks:
 services:
   watchtower:
     container_name: watchtower
-    image: nicholas-fedor/watchtower:latest
+    image: nickfedor/watchtower:latest
     networks:
       - default
       - socket_proxy
