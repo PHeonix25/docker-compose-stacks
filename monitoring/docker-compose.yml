@@ -33,6 +33,9 @@ services:
       - ./data:/app/data
     ports:
       - ${KUMA_PORT}:3001
+    networks:
+      - default
+      - socket_proxy
 
 volumes:
   dozzle_data:
