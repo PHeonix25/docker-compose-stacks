@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    restart: unless-stopped
+    volumes:
+      - dozzle_data:/data
+    ports:
+      - ${DOZZLE_PORT}:8080
+    networks:
+      - default
+      - socket_proxy
+    environment:
+      - DOZZLE_ENABLE_ACTIONS=${DOZZLE_ACTIONS}
+      - DOZZLE_ENABLE_SHELL=${DOZZLE_SHELL}
+      - DOZZLE_HOSTNAME=${HOST}
+      - DOZZLE_REMOTE_HOST=${SOCKET_PROXY}
+      #
+      # Uncomment to enable authentication. See https://dozzle.dev/guide/authentication
+      # - DOZZLE_AUTH_PROVIDER=simple
+      # Connect to one or more remote agents to monitor other Docker hosts. See https://dozzle.dev/guide/agent
+      # - DOZZLE_REMOTE_AGENT=
+      # Only show containers matching a filter. See https://dozzle.dev/guide/filters
+      # - DOZZLE_FILTER=${DOZZLE_FILTER}
+
+  uptime-kuma:
+    container_name: uptimekuma
+    image: louislam/uptime-kuma:2
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    ports:
+      - ${KUMA_PORT}:3001
+
+volumes:
+  dozzle_data:
+
+networks:
+  socket_proxy:
+    name: socket_proxy
+    external: true
